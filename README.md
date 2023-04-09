@@ -1,6 +1,6 @@
 ---
-title: Image To Text App
-emoji: 📹
+title: Sentiment Analysis App
+emoji: 💕
 colorFrom: blue
 colorTo: red
 sdk: streamlit
@@ -8,5 +8,5 @@ app_file: app.py
 pinned: false
 ---
 
-# image2textapp
+# sentiment analysis
 demo of 🤗 spaces deployment of a streamlit python app
