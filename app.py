@@ -8,6 +8,6 @@ text = st.text_input("Enter your text!", value="Oh wow, I did not know that.")
 if st.button('Analyze'):
     classifier = pipeline(model=name_dict[model_name], return_all_scores=True)
     result = classifier(text)
-    for stat in result[0]:
-        st.write(result[0][stat])
+    for i in range len(result[0]):
+        st.write(result[0][i])
 
