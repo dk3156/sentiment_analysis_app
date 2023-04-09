@@ -8,4 +8,6 @@ text = st.text_input("Enter your text!", value="Oh wow, I did not know that.")
 if st.button('Analyze'):
     classifier = pipeline(model=name_dict[model_name], return_all_scores=True)
     result = classifier(text)
-    st.write(result)
+    for stat in result[0]:
+        st.write("Emotion: ", stat["label"])
+        st.write(state["Score: ", stat["score"])
