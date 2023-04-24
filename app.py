@@ -41,10 +41,7 @@ df_test = pd.read_csv('./sample_data/test.csv')
 df_test['comment_text'] = df_test['comment_text'].apply(lambda text : clean_text(text))
 
 for comment in df_test['comment_text'][:10]:
-    classifier = pipeline(model="dk3156/toxic_tweets_model", return_all_scores=True)
-    result = classifier(comment)
-    for item in result:
-        st.write(f"Sentiment: {labels[item['label']]} with score of {item['score']}")
+    finetune(comment)
 
 st.title("Sentiment Analysis with Fine Tune Lauguage Modeling")
 
