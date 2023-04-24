@@ -19,7 +19,7 @@ def finetune(text):
     res = finetune(**tokens)
     scores = torch.sigmoid(res.logits)
     output = ""
-    print(text[:30], score[0][0].item())
+    print(text[:30], scores[0][0].item())
 
     # for i in range(len(labels)):
     #     output += labels[i] + ": " + str(round(scores[0][i].item(), 1)) + " "
