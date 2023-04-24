@@ -36,9 +36,11 @@ def finetune(text):
     res = finetune(**tokens)
     scores = torch.sigmoid(res.logits)
     output = ""
-    for i in range(len(labels)):
-        output += labels[i] + ": " + str(scores[i]) + "\n"
-    print(text + "\n" + output)
+    # for i in range(len(labels)):
+    #     output += labels[i] + ": " + str(scores[i]) + "\n"
+    for score in scores:
+        print(score)
+    # print(text + "\n" + output)
 
 df_test = pd.read_csv('./sample_data/test.csv')
 df_test['comment_text'] = df_test['comment_text'].apply(lambda text : clean_text(text))
