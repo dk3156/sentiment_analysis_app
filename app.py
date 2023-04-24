@@ -3,6 +3,9 @@ import pandas as pd
 from transformers import AutoTokenizer, AutoModelForSequenceClassification, pipeline
 import pandas as pd
 import re
+import torch
+
+labels= ["toxic", "severe_toxic", "obscene", "threat", "insult", "identity_hate"]
 
 #funciton for cleaning up texts
 def clean_text(text):
@@ -24,13 +27,21 @@ def clean_text(text):
   text = text.strip(' ') # Removing leading and trailing white spaces
   return text
 
-df_test = pd.read_csv('./data/test.csv')
+def finetune(text):
+    model = "dk3156/toxic_tweets_model"
+    tokenizer = DistilBertTokenizerFast.from_pretrained(model)
+    finetune = DistilBertForSequenceClassification.from_pretrained(model)
+    tokens = tokenizer(text, return_tensor="pt")
+    res = finetune(**tokens)
+    scores = torch.sigmoid(res.logits)
+    st.write(scores)
+
+df_test = pd.read_csv('./sample_data/test.csv')
 df_test['comment_text'] = df_test['comment_text'].apply(lambda text : clean_text(text))
 
 for comment in df_test['comment_text'][:10]:
     classifier = pipeline(model="dk3156/toxic_tweets_model", return_all_scores=True)
     result = classifier(comment)
-    cols = ["toxic", "severe_toxic", "obscene", "threat", "insult", "identity_hate"]
     for item in result:
         st.write(f"Sentiment: {cols[item['label']]} with score of {item['score']}")
 
@@ -38,15 +49,16 @@ st.title("Sentiment Analysis with Fine Tune Lauguage Modeling")
 
 text = st.text_input("Enter your text", value="Your dress looks like one colorful dishcloth!")
 
-model = st.selectbox("Select the language model", ("Fine_tuned", "Binary","Non-binary"))
+model = st.selectbox("Select the language model", ("Fine-tuned", "Binary","Non-binary"))
 
 if st.button('Analyze'):
-    if model == "Fine_tuned":
-        classifier = pipeline(model="dk3156/toxic_tweets_model", return_all_scores=True)
-        result = classifier(text)
-        cols = ["toxic", "severe_toxic", "obscene", "threat", "insult", "identity_hate"]
-        for item in result:
-            st.write(f"Sentiment: {cols[item['label']]} with score of {item['score']}")
+    if model == "Fine-tuned":
+        # classifier = pipeline(model="dk3156/toxic_tweets_model", return_all_scores=True)
+        # result = classifier(text)
+        # cols = ["toxic", "severe_toxic", "obscene", "threat", "insult", "identity_hate"]
+        # for item in result:
+        #     st.write(f"Sentiment: {cols[item['label']]} with score of {item['score']}")
+        finetune(text)
     elif model == "Binary":
         classifier = pipeline(model="distilbert-base-uncased-finetuned-sst-2-english", return_all_scores=True)
         result = classifier(text)
@@ -59,6 +71,5 @@ if st.button('Analyze'):
         label = result[0]['label']
         score = result[0]['score']
         st.write(f"Sentiment: {label} with score of {score}")
-
 
 
