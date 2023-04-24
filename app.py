@@ -7,6 +7,10 @@ import torch
 
 labels= ["toxic", "severe_toxic", "obscene", "threat", "insult", "identity_hate"]
 
+# table = {
+#     "Why the edits made under my usern..." : 
+# }
+
 def finetune(text):
     model = "dk3156/toxic_tweets_model"
     tokenizer = DistilBertTokenizerFast.from_pretrained(model)
@@ -15,10 +19,11 @@ def finetune(text):
     res = finetune(**tokens)
     scores = torch.sigmoid(res.logits)
     output = ""
+    print(text[:30], score[0][0].item())
 
-    for i in range(len(labels)):
-        output += labels[i] + ": " + str(round(scores[0][i].item(), 1)) + " "
-    st.write(text[:20] + "... \n" + output)
+    # for i in range(len(labels)):
+    #     output += labels[i] + ": " + str(round(scores[0][i].item(), 1)) + " "
+    # st.write(text[:20] + "... \n" + output)
 
 df_test = pd.read_csv('./sample_data/test.csv')
 
