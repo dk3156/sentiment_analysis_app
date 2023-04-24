@@ -7,6 +7,7 @@ import torch
 
 labels= ["toxic", "severe_toxic", "obscene", "threat", "insult", "identity_hate"]
 
+#torch updated?
 #funciton for cleaning up texts
 def clean_text(text):
   text = text.lower()
