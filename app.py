@@ -23,7 +23,7 @@ st.title("Sentiment Analysis")
 
 st.title("First Ten Tweets")
 for elem in first_ten_tweets:
-    st.write("Tweet: ", elem[0], " with toxicity of", elem[1])
+    st.write("Tweet: ", elem, " with toxicity of", first_ten_tweets[elem])
 
 def finetune(text):
     model = "dk3156/toxic_tweets_model"
@@ -34,10 +34,8 @@ def finetune(text):
     scores = torch.sigmoid(res.logits)
     output = ""
     for i in range(len(labels)):
-        output += labels[i] + ": " + str(round(scores[0][i].item(), 4)) + " "
-    st.write(text[:20] + "... \n" + output)
-
-df_test = pd.read_csv('./sample_data/test.csv')
+        output += labels[i] + " score of " + str(round(scores[0][i].item(), 4)) + "\n"
+    st.write("Tweet: " + text[:20] + "\n" + output)
 
 text = st.text_input("Enter your text", value="Your dress looks like one colorful dishcloth!")
 
@@ -49,14 +47,13 @@ if st.button('Analyze'):
     elif model == "Binary":
         classifier = pipeline(model="distilbert-base-uncased-finetuned-sst-2-english", return_all_scores=True)
         result = classifier(text)
-        label = result[0][0]
-        score = result[0][1]
-        st.write(f"Sentiment: {label} with score of {score}")
+        pos = result[0][0]
+        neg = result[0][1]
+        st.write(pos, neg)
     else:
         classifier = pipeline(model="j-hartmann/emotion-english-distilroberta-base", return_all_scores=True)
         result = classifier(text)
-        label = result[0][0]
-        score = result[0][1]
-        st.write(f"Sentiment: {label} with score of {score}")
+        for i in range(0,6):   
+            st.write(result[0][i])
 
 
