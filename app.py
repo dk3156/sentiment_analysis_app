@@ -36,9 +36,9 @@ def finetune(text):
     res = finetune(**tokens)
     scores = torch.sigmoid(res.logits)
     output = ""
-    for score in scores:
-        output += labels[0] + ": " + f"{score:.2f}" + "\n"
-    st.write(text + "\n" + output)
+    for i in range(len(labels)):
+        output += labels[i] + ": " + str(scores[i]) + "\n"
+    print(text + "\n" + output)
 
 df_test = pd.read_csv('./sample_data/test.csv')
 df_test['comment_text'] = df_test['comment_text'].apply(lambda text : clean_text(text))
@@ -65,12 +65,12 @@ if st.button('Analyze'):
         result = classifier(text)
         label = result[0][0]
         score = result[0][1]
-        st.write(f"Sentiment: {label} with score of {score}")
+        print(f"Sentiment: {label} with score of {score}")
     else:
         classifier = pipeline(model="j-hartmann/emotion-english-distilroberta-base", return_all_scores=True)
         result = classifier(text)
         label = result[0][0]
         score = result[0][1]
-        st.write(f"Sentiment: {label} with score of {score}")
+        print(f"Sentiment: {label} with score of {score}")
 
 
