@@ -30,7 +30,7 @@ for comment in df_test['comment_text'][:10]:
     result = classifier(comment)
     cols = ["toxic", "severe_toxic", "obscene", "threat", "insult", "identity_hate"]
     for item in result:
-        st.write(f"Sentiment: {cols[item['label']]} with score of {item['score']})
+        st.write(f"Sentiment: {cols[item['label']]} with score of {item['score']}")
 
 st.title("Sentiment Analysis with Fine Tune Lauguage Modeling")
 
@@ -44,7 +44,7 @@ if st.button('Analyze'):
         result = classifier(text)
         cols = ["toxic", "severe_toxic", "obscene", "threat", "insult", "identity_hate"]
         for item in result:
-            st.write(f"Sentiment: {cols[item['label']]} with score of {item['score']})
+            st.write(f"Sentiment: {cols[item['label']]} with score of {item['score']}")
     elif mode == "Binary"
         classifier = pipeline(model="distilbert-base-uncased-finetuned-sst-2-english", return_all_scores=True)
         result = classifier(text)
