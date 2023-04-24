@@ -38,15 +38,16 @@ def finetune(text):
     output = ""
     # for i in range(len(labels)):
     #     output += labels[i] + ": " + str(scores[i]) + "\n"
-    print(scores[0][0].item())
+    for i in range(len(labels)):
+        print(labels[i] + ": " + str(scores[0][i].item()))
     # print(text + "\n" + output)
 
 df_test = pd.read_csv('./sample_data/test.csv')
 df_test['comment_text'] = df_test['comment_text'].apply(lambda text : clean_text(text))
 
 for comment in df_test['comment_text'][:10]:
-    print(comment)
-    # finetune(comment)
+    print(comment[:10])
+    finetune(comment)
 
 st.title("Sentiment Analysis")
 
