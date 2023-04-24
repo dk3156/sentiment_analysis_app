@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from transformers import AutoTokenizer, AutoModelForSequenceClassification, pipeline
+from transformers import DistilBertTokenizerFast, DistilBertForSequenceClassification, pipeline
 import pandas as pd
 import re
 import torch
