@@ -39,7 +39,8 @@ def finetune(text):
     # for i in range(len(labels)):
     #     output += labels[i] + ": " + str(scores[i]) + "\n"
     for score in scores:
-        print(score)
+        for num in score:
+            print(num, end=" ")
     # print(text + "\n" + output)
 
 df_test = pd.read_csv('./sample_data/test.csv')
