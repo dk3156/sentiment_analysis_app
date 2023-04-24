@@ -35,7 +35,10 @@ def finetune(text):
     tokens = tokenizer(text, return_tensors="pt")
     res = finetune(**tokens)
     scores = torch.sigmoid(res.logits)
-    st.write(scores)
+    output = ""
+    for score in scores:
+        output += labels[0] + ": " + f"{score:.2f}" + "\n"
+    st.write(text + "\n" + output)
 
 df_test = pd.read_csv('./sample_data/test.csv')
 df_test['comment_text'] = df_test['comment_text'].apply(lambda text : clean_text(text))
@@ -43,7 +46,7 @@ df_test['comment_text'] = df_test['comment_text'].apply(lambda text : clean_text
 for comment in df_test['comment_text'][:10]:
     finetune(comment)
 
-st.title("Sentiment Analysis with Fine Tune Lauguage Modeling")
+st.title("Sentiment Analysis")
 
 text = st.text_input("Enter your text", value="Your dress looks like one colorful dishcloth!")
 
@@ -60,14 +63,14 @@ if st.button('Analyze'):
     elif model == "Binary":
         classifier = pipeline(model="distilbert-base-uncased-finetuned-sst-2-english", return_all_scores=True)
         result = classifier(text)
-        label = result[0]['label']
-        score = result[0]['score']
+        label = result[0][0]
+        score = result[0][1]
         st.write(f"Sentiment: {label} with score of {score}")
     else:
         classifier = pipeline(model="j-hartmann/emotion-english-distilroberta-base", return_all_scores=True)
         result = classifier(text)
-        label = result[0]['label']
-        score = result[0]['score']
+        label = result[0][0]
+        score = result[0][1]
         st.write(f"Sentiment: {label} with score of {score}")
 
 
