@@ -32,7 +32,7 @@ def finetune(text):
     model = "dk3156/toxic_tweets_model"
     tokenizer = DistilBertTokenizerFast.from_pretrained(model)
     finetune = DistilBertForSequenceClassification.from_pretrained(model)
-    tokens = tokenizer(text, return_tensor="pt")
+    tokens = tokenizer(text, return_tensors="pt")
     res = finetune(**tokens)
     scores = torch.sigmoid(res.logits)
     st.write(scores)
