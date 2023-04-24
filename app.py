@@ -45,7 +45,8 @@ df_test = pd.read_csv('./sample_data/test.csv')
 df_test['comment_text'] = df_test['comment_text'].apply(lambda text : clean_text(text))
 
 for comment in df_test['comment_text'][:10]:
-    finetune(comment)
+    print(comment)
+    # finetune(comment)
 
 st.title("Sentiment Analysis")
 
@@ -66,12 +67,12 @@ if st.button('Analyze'):
         result = classifier(text)
         label = result[0][0]
         score = result[0][1]
-        print(f"Sentiment: {label} with score of {score}")
+        # print(f"Sentiment: {label} with score of {score}")
     else:
         classifier = pipeline(model="j-hartmann/emotion-english-distilroberta-base", return_all_scores=True)
         result = classifier(text)
         label = result[0][0]
         score = result[0][1]
-        print(f"Sentiment: {label} with score of {score}")
+        # print(f"Sentiment: {label} with score of {score}")
 
 
