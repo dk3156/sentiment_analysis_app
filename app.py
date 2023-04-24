@@ -33,9 +33,10 @@ def finetune(text):
     res = finetune(**tokens)
     scores = torch.sigmoid(res.logits)
     output = ""
+    
+    st.write("Tweet: " + text[:20] + "...")
     for i in range(len(labels)):
-        output += labels[i] + " score of " + str(round(scores[0][i].item(), 4)) + "\n"
-    st.write("Tweet: " + text[:20] + "\n" + output)
+        st.write(labels[i], " : ", round(scores[0][i].item(), 4))
 
 text = st.text_input("Enter your text", value="Your dress looks like one colorful dishcloth!")
 
