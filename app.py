@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
 from transformers import AutoTokenizer, AutoModelForSequenceClassification, pipeline
+import pandas as pd
+import re
 
 #funciton for cleaning up texts
 def clean_text(text):
@@ -39,13 +41,13 @@ text = st.text_input("Enter your text", value="Your dress looks like one colorfu
 model = st.selectbox("Select the language model", ("Fine_tuned", "Binary","Non-binary"))
 
 if st.button('Analyze'):
-    if model == "Fine_tuned"
+    if model == "Fine_tuned":
         classifier = pipeline(model="dk3156/toxic_tweets_model", return_all_scores=True)
         result = classifier(text)
         cols = ["toxic", "severe_toxic", "obscene", "threat", "insult", "identity_hate"]
         for item in result:
             st.write(f"Sentiment: {cols[item['label']]} with score of {item['score']}")
-    elif mode == "Binary"
+    elif model == "Binary":
         classifier = pipeline(model="distilbert-base-uncased-finetuned-sst-2-english", return_all_scores=True)
         result = classifier(text)
         label = result[0]['label']
