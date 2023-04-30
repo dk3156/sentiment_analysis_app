@@ -1,14 +1,14 @@
 import torch
 import transformers
 #===================================#
-'''
+"""
 Documentation for Milestone 4 - Dongje Kim, dk3156
 Incline comments are for the detailed documentation of each part of the code
-'''
+"""
 #===================================#
-'''
+"""
 URL for downloading the pre-trained models.
-'''
+"""
 DOWNLOAD_URL = "https://github.com/unitaryai/detoxify/releases/download/"
 MODEL_URLS = {
     "original": DOWNLOAD_URL + "v0.1-alpha/toxic_original-c1212f89.ckpt",
@@ -16,8 +16,7 @@ MODEL_URLS = {
 
 PRETRAINED_MODEL = None
 
-
-'''
+"""
 Returns: a tuple containing the pre-trained model and its corresponding tokenizer
 Arguments:
 model_type: the type of pre-trained model to load.
@@ -26,7 +25,7 @@ tokenizer_name: the name of the tokenizer class.
 num_classes: the number of classes that the model should classify the input into.
 state_dict: the state dictionary of the pre-trained model.
 huggingface_config_path: the path to the Hugging Face configuration file.
-'''
+"""
 def get_model_and_tokenizer(
     model_type, model_name, tokenizer_name, num_classes, state_dict, huggingface_config_path=None
 ):
@@ -45,14 +44,14 @@ def get_model_and_tokenizer(
 
     return model, tokenizer
 
-'''
+"""
 Returns : loads the pre-trained model and its tokenizer, and returns them along with the class names that the model classifies the input into.
 Arguments:
 model_type: the type of pre-trained model to load.
 checkpoint: the path to the checkpoint file.
 device: the device to run the model on.
 huggingface_config_path: the path to the Hugging Face configuration file.
-'''
+"""
 def load_checkpoint(model_type="original", checkpoint=None, device="cpu", huggingface_config_path=None):
     if checkpoint is None:
         checkpoint_path = MODEL_URLS[model_type]
@@ -80,9 +79,9 @@ def load_checkpoint(model_type="original", checkpoint=None, device="cpu", huggin
 
     return model, tokenizer, class_names
 
-'''
+"""
 loads the pre-trained model and returns it.
-'''
+"""
 def load_model(model_type, checkpoint=None):
     if checkpoint is None:
         model, _, _ = load_checkpoint(model_type=model_type)
